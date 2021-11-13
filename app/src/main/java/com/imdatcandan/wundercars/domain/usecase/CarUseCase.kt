@@ -1,7 +1,9 @@
-package com.imdatcandan.wundercars.domain
+package com.imdatcandan.wundercars.domain.usecase
 
 import com.imdatcandan.wundercars.common.Resource
-import com.imdatcandan.wundercars.data.CarRepository
+import com.imdatcandan.wundercars.data.repository.CarRepository
+import com.imdatcandan.wundercars.domain.mapper.CarDomainModelMapper
+import com.imdatcandan.wundercars.domain.model.CarDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

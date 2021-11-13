@@ -1,7 +1,8 @@
-package com.imdatcandan.wundercars.domain
+package com.imdatcandan.wundercars.domain.mapper
 
 import com.imdatcandan.wundercars.common.ModelMapper
 import com.imdatcandan.wundercars.data.model.CarApiModel
+import com.imdatcandan.wundercars.domain.model.CarDomainModel
 
 class CarDomainModelMapper : ModelMapper<CarApiModel?, CarDomainModel> {
     override fun mapToModel(data: CarApiModel?): CarDomainModel {
