@@ -23,4 +23,15 @@ class CarUseCase @Inject constructor(
             emit(Resource.Error(e))
         }
     }
+
+    fun executeGetCarDetail(carId: String): Flow<Resource<CarDomainModel>> = flow {
+        try {
+            emit(Resource.Loading)
+            val carApiModel = carRepository.getCarDetail(carId)
+            val carDomainModel = carDomainModelMapper.mapToModel(carApiModel)
+            emit(Resource.Success(carDomainModel))
+        } catch (e: Exception) {
+            emit(Resource.Error(e))
+        }
+    }
 }
