@@ -1,6 +1,7 @@
 package com.imdatcandan.wundercars.data
 
 import com.imdatcandan.wundercars.data.model.CarApiModel
+import com.imdatcandan.wundercars.domain.CarDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

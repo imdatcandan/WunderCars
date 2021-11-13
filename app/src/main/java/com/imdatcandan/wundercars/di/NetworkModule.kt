@@ -1,8 +1,10 @@
 package com.imdatcandan.wundercars.di
 
 import com.imdatcandan.wundercars.BuildConfig
+import com.imdatcandan.wundercars.data.CarRepository
 import com.imdatcandan.wundercars.data.CarRepositoryImpl
 import com.imdatcandan.wundercars.data.CarService
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -47,7 +49,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCarRepository(carService: CarService) : CarRepositoryImpl {
+    fun provideCarRepository(carService: CarService) : CarRepository {
         return CarRepositoryImpl(carService)
     }
+
+
 }
