@@ -1,4 +1,4 @@
-package com.imdatcandan.wundercars.ui.theme
+package com.imdatcandan.wundercars.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
