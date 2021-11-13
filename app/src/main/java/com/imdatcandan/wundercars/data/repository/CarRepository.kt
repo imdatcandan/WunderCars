@@ -1,4 +1,4 @@
-package com.imdatcandan.wundercars.data
+package com.imdatcandan.wundercars.data.repository
 
 import com.imdatcandan.wundercars.data.model.CarApiModel
 
