@@ -8,5 +8,8 @@ data class CarApiModel(
     val latitude: Double?,
     @SerializedName("lon")
     val longitude: Double?,
-    val title: String?
+    val title: String?,
+    val reservationState: Int?,
+    val damageDescription: String?,
+    val vehicleTypeImageUrl: String?
 )
