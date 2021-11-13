@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.imdatcandan.wundercars.R
-import com.imdatcandan.wundercars.domain.CarDomainModel
+import com.imdatcandan.wundercars.domain.model.CarDomainModel
 import com.imdatcandan.wundercars.presentation.navigation.Screen
 import com.imdatcandan.wundercars.presentation.theme.isDarkTheme
 import kotlinx.coroutines.launch
@@ -94,7 +94,7 @@ private fun MapViewContainer(
 
                 carModelList.forEach {
                     val carModel = it
-                    val location = LatLng(it.latitude, it.longitude)
+                    val location = LatLng(carModel.latitude, carModel.longitude)
 
                     googleMap.animateCamera(
                         CameraUpdateFactory.newLatLngZoom(
@@ -103,16 +103,22 @@ private fun MapViewContainer(
                         )
                     )
 
-                    val markerOptions = MarkerOptions()
-                        .position(location)
-                        .title(carModel.title)
-                        .snippet(carModel.carId)
+                    val markerOptions = createMarkerOptions(carModel)
                     googleMap.addMarker(markerOptions)
 
                     googleMap.setOnMarkerClickListener { selectedMarker ->
+//                        val selectedCar = carModelList.first { selectedMarker.snippet == it.carId }
+//                      //  googleMap.clear()
+//                        googleMap.addMarker(createMarkerOptions(selectedCar))
 
-                        navController.navigate(Screen.CarDetailScreen.route + "/${selectedMarker.snippet}")
+                navController.navigate(Screen.CarDetailScreen.route + "/${selectedMarker.snippet}")
+
                         false
+                    }
+
+                    googleMap.setOnInfoWindowClickListener { selectedMarker ->
+                        navController.navigate(Screen.CarDetailScreen.route + "/${selectedMarker.snippet}")
+
                     }
 
                 }
@@ -132,6 +138,15 @@ private fun MapViewContainer(
             }
         }
     }
+}
+
+private fun createMarkerOptions(carModel: CarDomainModel): MarkerOptions {
+    val location = LatLng(carModel.latitude, carModel.longitude)
+    return MarkerOptions()
+        .position(location)
+        .title(carModel.title)
+        .snippet(carModel.carId)
+
 }
 
 private const val MAP_DEFAULT_ZOOM_LEVEL = 12f
