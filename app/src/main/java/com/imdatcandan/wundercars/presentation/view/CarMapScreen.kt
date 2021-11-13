@@ -14,20 +14,21 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.navigation.NavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.imdatcandan.wundercars.R
 import com.imdatcandan.wundercars.domain.CarDomainModel
+import com.imdatcandan.wundercars.presentation.navigation.Screen
 import com.imdatcandan.wundercars.presentation.theme.isDarkTheme
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun CarListScreen(carModelList: List<CarDomainModel>) {
+fun CarListScreen(carModelList: List<CarDomainModel>, navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -36,7 +37,8 @@ fun CarListScreen(carModelList: List<CarDomainModel>) {
 
         MapViewContainer(
             map = mapView,
-            carModelList = carModelList
+            carModelList = carModelList,
+            navController = navController
         )
     }
 }
@@ -81,7 +83,8 @@ fun rememberMapLifecycleObserver(mapView: MapView): LifecycleEventObserver =
 @Composable
 private fun MapViewContainer(
     map: MapView,
-    carModelList: List<CarDomainModel>
+    carModelList: List<CarDomainModel>,
+    navController: NavController
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -103,8 +106,14 @@ private fun MapViewContainer(
                     val markerOptions = MarkerOptions()
                         .position(location)
                         .title(carModel.title)
+                        .snippet(carModel.carId)
                     googleMap.addMarker(markerOptions)
 
+                    googleMap.setOnMarkerClickListener { selectedMarker ->
+
+                        navController.navigate(Screen.CarDetailScreen.route + "/${selectedMarker.snippet}")
+                        false
+                    }
 
                 }
                 if (mapView.context.isDarkTheme()) {

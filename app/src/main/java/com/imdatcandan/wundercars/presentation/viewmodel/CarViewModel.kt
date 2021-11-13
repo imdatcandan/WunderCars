@@ -14,8 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CarViewModel @Inject constructor(private val carUseCase: CarUseCase) : ViewModel() {
 
-    private val _uiState = mutableStateOf(CarUiState())
-    val uiState: State<CarUiState> = _uiState
+    private val _uiState = mutableStateOf(CarListUiState())
+    val uiState: State<CarListUiState> = _uiState
 
     init {
         getCarList()
@@ -24,9 +24,9 @@ class CarViewModel @Inject constructor(private val carUseCase: CarUseCase) : Vie
     fun getCarList() {
         carUseCase.executeGetCarList().onEach {
             when (it) {
-                is Resource.Success -> _uiState.value = CarUiState(carModel = it.data)
-                is Resource.Error -> _uiState.value = CarUiState(error = it.exception.localizedMessage ?: "Error!")
-                is Resource.Loading -> _uiState.value = CarUiState(isLoading = true)
+                is Resource.Success -> _uiState.value = CarListUiState(carModel = it.data)
+                is Resource.Error -> _uiState.value = CarListUiState(error = it.exception.localizedMessage ?: "Error!")
+                is Resource.Loading -> _uiState.value = CarListUiState(isLoading = true)
             }
         }.launchIn(viewModelScope)
     }

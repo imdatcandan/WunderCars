@@ -1,5 +1,6 @@
 package com.imdatcandan.wundercars.presentation.view
 
+import android.content.DialogInterface
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -9,12 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.imdatcandan.wundercars.R
-import com.imdatcandan.wundercars.presentation.viewmodel.CarViewModel
 
 @Composable
-fun ErrorRetryDialog(message: String, viewModel: CarViewModel = hiltViewModel()) {
+fun ErrorRetryDialog(message: String, onClickListener: DialogInterface.OnClickListener) {
     MaterialTheme {
         Column {
             val openDialog = remember { mutableStateOf(true) }
@@ -35,7 +34,7 @@ fun ErrorRetryDialog(message: String, viewModel: CarViewModel = hiltViewModel())
                         Button(
                             onClick = {
                                 openDialog.value = false
-                                viewModel.getCarList()
+                                onClickListener
                             }) {
                             Text(text = stringResource(id = R.string.dialog_error_button))
                         }
