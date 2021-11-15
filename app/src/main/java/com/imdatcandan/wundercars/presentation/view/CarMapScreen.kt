@@ -148,7 +148,6 @@ private fun createMarkerOptions(carModel: CarDomainModel): MarkerOptions {
         .position(location)
         .title(carModel.title)
         .snippet(carModel.carId)
-
 }
 
 private const val MAP_DEFAULT_ZOOM_LEVEL = 12f

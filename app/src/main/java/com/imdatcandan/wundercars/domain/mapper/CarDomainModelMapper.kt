@@ -10,9 +10,9 @@ class CarDomainModelMapper : ModelMapper<CarApiModel?, CarDomainModel> {
             carId = data?.carId ?: "",
             latitude = data?.latitude ?: 0.0,
             longitude = data?.longitude ?: 0.0,
-            title = data?.title ?: "No name",
+            title = data?.title ?: "",
             reservationState = data?.reservationState ?: 0,
-            damageDescription = data?.damageDescription ?: "Unknown Damage",
+            damageDescription = data?.damageDescription ?: "",
             vehicleTypeImageUrl = data?.vehicleTypeImageUrl ?: ""
         )
     }
