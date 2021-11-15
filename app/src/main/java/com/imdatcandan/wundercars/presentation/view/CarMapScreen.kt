@@ -1,7 +1,6 @@
 package com.imdatcandan.wundercars.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -18,12 +17,10 @@ import androidx.navigation.NavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.imdatcandan.wundercars.R
 import com.imdatcandan.wundercars.domain.model.CarDomainModel
 import com.imdatcandan.wundercars.presentation.navigation.Screen
-import com.imdatcandan.wundercars.presentation.theme.isDarkTheme
 import kotlinx.coroutines.launch
 
 
@@ -88,6 +85,7 @@ private fun MapViewContainer(
 ) {
     val coroutineScope = rememberCoroutineScope()
 
+
     AndroidView({ map }) { mapView ->
         coroutineScope.launch {
             mapView.getMapAsync { googleMap ->
@@ -105,40 +103,28 @@ private fun MapViewContainer(
 
                     val markerOptions = createMarkerOptions(carModel)
                     googleMap.addMarker(markerOptions)
+                }
 
-                    googleMap.setOnMarkerClickListener { selectedMarker ->
-//                        val selectedCar = carModelList.first { selectedMarker.snippet == it.carId }
-//                      //  googleMap.clear()
-//                        googleMap.addMarker(createMarkerOptions(selectedCar))
+                var clickCount = 0
 
-                navController.navigate(Screen.CarDetailScreen.route + "/${selectedMarker.snippet}")
-
+                googleMap.setOnMarkerClickListener { selectedMarker ->
+                    return@setOnMarkerClickListener if (clickCount == 0) {
+                        val selectedCar = carModelList.first { selectedMarker.snippet == it.carId }
+                        googleMap.clear()
+                        googleMap.addMarker(createMarkerOptions(selectedCar))?.showInfoWindow()
+                        clickCount++
                         false
-                    }
-
-                    googleMap.setOnInfoWindowClickListener { selectedMarker ->
+                    } else {
+                        clickCount = 0
                         navController.navigate(Screen.CarDetailScreen.route + "/${selectedMarker.snippet}")
-
-                    }
-
-                }
-                if (mapView.context.isDarkTheme()) {
-                    try {
-                        val style = MapStyleOptions.loadRawResourceStyle(
-                            mapView.context,
-                            R.raw.mapstyle_night
-                        )
-
-                        googleMap.setMapStyle(style)
-                    } catch (exception: Exception) {
-                        Log.e("Location", "Error occurred during applying map style: $exception")
+                        true
                     }
                 }
-
             }
         }
     }
 }
+
 
 private fun createMarkerOptions(carModel: CarDomainModel): MarkerOptions {
     val location = LatLng(carModel.latitude, carModel.longitude)
