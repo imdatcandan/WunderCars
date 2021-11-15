@@ -6,7 +6,7 @@ that's why I prefer to implement compose UI for better performance when we compa
 What architecture-layers did I create and why?
 
 I follow Android architecture guideline that's why I used MVVM and some jetpack components
-because it is easy to apply separation of concern and no need to have view reference like MVP that helps me for memory usage
+because it is easy to apply separation of concern and no need to have view reference like MVP that helps for memory usage and configuration changes and so on
 
 I prefer divide the layers below to apply separation of concern and single responsibility principle to create a clean MVVM architecture like readable, testable and maintainable
 * Data -> RepositoryImpl, Repository Interface, ApiModels(Nullable Network Data)
@@ -18,7 +18,7 @@ I used the tech stack and libraries;
 * MVVM Architecture
 * Flow
 * Retrofit for network
-* Koin for DI
+* Dagger Hilt for DI
 * Coroutines for async operations
 * MockK for Unit Tests
 * Jetpack Compose for UI
@@ -26,7 +26,7 @@ I used the tech stack and libraries;
 * ModelMapper to convert ApiModel to DomainModel and DomainModel to UiModel
 * Coil for Image loading
 * Basic Error Handling
-* Navigation architecture component to go to ImagePreviewScreen
+* Navigation architecture component to go to Detail Page
 
 What would I do if I had more time?
 * Better UI implementation
