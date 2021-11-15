@@ -26,7 +26,6 @@ class CarDetailViewModel @Inject constructor(
     private val _carDetailUiState = mutableStateOf(UiState<CarDomainModel>())
     val carDetailUiState: State<UiState<CarDomainModel>> = _carDetailUiState
 
-
     private val _carReservationUiState = mutableStateOf(UiState<ReservationDomainModel>())
     val carReservationUiState: State<UiState<ReservationDomainModel>> = _carReservationUiState
 

@@ -1,6 +1,9 @@
 package com.imdatcandan.wundercars.presentation.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.imdatcandan.wundercars.R
 import com.imdatcandan.wundercars.presentation.navigation.Args
 import com.imdatcandan.wundercars.presentation.navigation.Screen
@@ -22,10 +26,12 @@ import com.imdatcandan.wundercars.presentation.viewmodel.CarDetailViewModel
 import com.imdatcandan.wundercars.presentation.viewmodel.CarMapViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
 
+    @ExperimentalPermissionsApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -37,6 +43,16 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.CarMapScreen.route
                     ) {
+                        composable(route = Screen.CarMapScreen.route) {
+                            LocationPermissionDialog(navigateToSettingsScreen = {
+                                startActivity(
+                                    Intent(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                        Uri.fromParts("package", packageName, null)
+                                    )
+                                )
+                            })
+                        }
                         composable(route = Screen.CarMapScreen.route) {
                             CarMapPreview(navController = navController)
                         }
@@ -52,6 +68,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalPermissionsApi
 @Composable
 fun CarMapPreview(
     viewModel: CarMapViewModel = hiltViewModel(),

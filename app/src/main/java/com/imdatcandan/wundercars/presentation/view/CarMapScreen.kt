@@ -1,5 +1,7 @@
 package com.imdatcandan.wundercars.presentation.view
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
@@ -24,6 +28,7 @@ import com.imdatcandan.wundercars.presentation.navigation.Screen
 import kotlinx.coroutines.launch
 
 
+@ExperimentalPermissionsApi
 @Composable
 fun CarListScreen(carModelList: List<CarDomainModel>, navController: NavController) {
     Box(
@@ -77,6 +82,7 @@ fun rememberMapLifecycleObserver(mapView: MapView): LifecycleEventObserver =
         }
     }
 
+@ExperimentalPermissionsApi
 @Composable
 private fun MapViewContainer(
     map: MapView,
@@ -84,6 +90,8 @@ private fun MapViewContainer(
     navController: NavController
 ) {
     val coroutineScope = rememberCoroutineScope()
+
+    val context = LocalContext.current
 
 
     AndroidView({ map }) { mapView ->
@@ -106,6 +114,14 @@ private fun MapViewContainer(
                 }
 
                 var clickCount = 0
+
+                if (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    googleMap.isMyLocationEnabled = true
+                }
 
                 googleMap.setOnMarkerClickListener { selectedMarker ->
                     return@setOnMarkerClickListener if (clickCount == 0) {
