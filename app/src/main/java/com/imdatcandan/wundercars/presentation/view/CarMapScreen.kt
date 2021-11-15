@@ -98,6 +98,14 @@ private fun MapViewContainer(
         coroutineScope.launch {
             mapView.getMapAsync { googleMap ->
 
+                if (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    googleMap.isMyLocationEnabled = true
+                }
+
                 carModelList.forEach {
                     val carModel = it
                     val location = LatLng(carModel.latitude, carModel.longitude)
@@ -114,14 +122,6 @@ private fun MapViewContainer(
                 }
 
                 var clickCount = 0
-
-                if (ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    googleMap.isMyLocationEnabled = true
-                }
 
                 googleMap.setOnMarkerClickListener { selectedMarker ->
                     return@setOnMarkerClickListener if (clickCount == 0) {
@@ -150,4 +150,4 @@ private fun createMarkerOptions(carModel: CarDomainModel): MarkerOptions {
         .snippet(carModel.carId)
 }
 
-private const val MAP_DEFAULT_ZOOM_LEVEL = 12f
+private const val MAP_DEFAULT_ZOOM_LEVEL = 15f

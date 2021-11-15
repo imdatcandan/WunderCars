@@ -1,8 +1,10 @@
 How did I approach the task?
+
 As a challenge it was not so difficult to implement an architecture but as UX was quite detailed
 that's why I prefer to implement compose UI for better performance when we compare data binding and so on
 
 What architecture-layers did I create and why?
+
 I follow Android architecture guideline that's why I used MVVM and some jetpack components
 because it is easy to apply separation of concern and no need to have view reference like MVP that helps me for memory usage
 
@@ -27,6 +29,7 @@ I used the tech stack and libraries;
 * Navigation architecture component to go to ImagePreviewScreen
 
 What would I do if I had more time?
+
 Better UI implementation
 More detailed unit tests for each single unit
 Basic UI test

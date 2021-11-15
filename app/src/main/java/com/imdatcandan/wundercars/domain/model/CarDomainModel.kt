@@ -10,6 +10,6 @@ data class CarDomainModel(
     val vehicleTypeImageUrl: String
 ) {
     override fun toString(): String {
-        return "title:$title \nlocation:$latitude $longitude \nreservationState: $reservationState \ndamageDescription:$damageDescription"
+        return "carId: $carId \ntitle:$title \nlocation:$latitude, $longitude \nreservationState: $reservationState \ndamageDescription:$damageDescription"
     }
 }
