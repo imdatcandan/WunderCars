@@ -25,14 +25,4 @@ class CarRepositoryTest : BaseUnitTest<CarRepositoryImpl>() {
 
         assertEquals(result, carApiModelList)
     }
-
-//    @Test
-//    fun `should not get ad detail from service`() = testCoroutine {
-//        coEvery { carService.getCarList() } returns car
-//
-//        val result = tested.getAdDetail(DEFAULT_AD_ID)
-//
-//        assertEquals(result, adApiModel)
-//    }
-
 }
