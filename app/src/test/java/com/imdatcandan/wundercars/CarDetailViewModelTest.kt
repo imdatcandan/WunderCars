@@ -24,7 +24,6 @@ class CarDetailViewModelTest : BaseUnitTest<CarDetailViewModel>() {
     private val carUseCase: CarUseCase = mockk(relaxed = true)
     private val reservationUseCase: ReservationUseCase = mockk(relaxed = true)
 
-    private val carDomainModelList: List<CarDomainModel> = mockk(relaxed = true)
     private val carDomainModel: CarDomainModel = mockk(relaxed = true)
     private val reservationDomainModel: ReservationDomainModel = mockk(relaxed = true)
     private val savedStateHandle: SavedStateHandle = mockk(relaxed = true)

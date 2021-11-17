@@ -1,6 +1,5 @@
-package com.ebayk
+package com.imdatcandan.wundercars
 
-import com.imdatcandan.wundercars.BaseUnitTest
 import com.imdatcandan.wundercars.common.Resource
 import com.imdatcandan.wundercars.domain.model.CarDomainModel
 import com.imdatcandan.wundercars.domain.usecase.CarUseCase
@@ -41,37 +40,6 @@ class CarMapViewModelTest : BaseUnitTest<CarMapViewModel>() {
     @Test
     fun `test error car list ui state`() = testCoroutine {
         coEvery { carUseCase.executeGetCarList() } returns flowOf(
-            Resource.Error(
-                exception = Throwable(ERROR_MESSAGE)
-            )
-        )
-
-        tested.getCarList()
-
-        assertEquals(
-            UiState(isLoading = false, data = null, error = ERROR_MESSAGE),
-            tested.uiState.value
-        )
-    }
-
-    @ExperimentalTime
-    @Test
-    fun `test success car detail ui state`() = testCoroutine {
-        coEvery { carUseCase.executeGetCarDetail(DEFAULT_CAR_ID) } returns flowOf(Resource.Success(data = carDomainModel))
-
-
-        tested.getCarList()
-
-        assertEquals(
-            UiState(isLoading = false, data = carDomainModelList, error = ""),
-            tested.uiState.value
-        )
-    }
-
-    @ExperimentalTime
-    @Test
-    fun `test error car detail ui state`() = testCoroutine {
-        coEvery { carUseCase.executeGetCarDetail(DEFAULT_CAR_ID) } returns flowOf(
             Resource.Error(
                 exception = Throwable(ERROR_MESSAGE)
             )
