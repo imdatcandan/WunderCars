@@ -18,7 +18,6 @@ class CarMapViewModelTest : BaseUnitTest<CarMapViewModel>() {
 
     private val carUseCase: CarUseCase = mockk(relaxed = true)
     private val carDomainModelList: List<CarDomainModel> = mockk(relaxed = true)
-    private val carDomainModel: CarDomainModel = mockk(relaxed = true)
 
     override fun initSelf() = CarMapViewModel(carUseCase)
 
@@ -54,7 +53,6 @@ class CarMapViewModelTest : BaseUnitTest<CarMapViewModel>() {
     }
 
     companion object {
-        const val DEFAULT_CAR_ID = "1"
         private const val ERROR_MESSAGE = "error"
     }
 
