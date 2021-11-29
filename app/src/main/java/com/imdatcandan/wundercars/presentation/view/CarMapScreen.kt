@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPermissionsApi
 @Composable
-fun CarListScreen(carModelList: List<CarDomainModel>, navController: NavController) {
+fun CarMapScreen(carModelList: List<CarDomainModel>, navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()

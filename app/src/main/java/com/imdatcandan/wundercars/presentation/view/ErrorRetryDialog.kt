@@ -1,6 +1,5 @@
 package com.imdatcandan.wundercars.presentation.view
 
-import android.content.DialogInterface
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -13,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import com.imdatcandan.wundercars.R
 
 @Composable
-fun ErrorRetryDialog(message: String, onClickListener: DialogInterface.OnClickListener) {
+fun ErrorRetryDialog(message: String, action: () -> Unit) {
     MaterialTheme {
         Column {
             val openDialog = remember { mutableStateOf(true) }
@@ -22,7 +21,7 @@ fun ErrorRetryDialog(message: String, onClickListener: DialogInterface.OnClickLi
 
                 AlertDialog(
                     onDismissRequest = {
-                        openDialog.value = true
+                        openDialog.value = false
                     },
                     title = {
                         Text(text = stringResource(id = R.string.dialog_error_title))
@@ -31,11 +30,11 @@ fun ErrorRetryDialog(message: String, onClickListener: DialogInterface.OnClickLi
                         Text(text = stringResource(id = R.string.dialog_error_message, message))
                     },
                     confirmButton = {
-                        Button(
-                            onClick = {
-                                openDialog.value = false
-                                onClickListener
-                            }) {
+                        Button(onClick = {
+                            openDialog.value = false
+                            action.invoke()
+                        }
+                        ) {
                             Text(text = stringResource(id = R.string.dialog_error_button))
                         }
                     }

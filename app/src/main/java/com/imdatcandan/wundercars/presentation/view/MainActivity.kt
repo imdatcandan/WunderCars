@@ -1,9 +1,6 @@
 package com.imdatcandan.wundercars.presentation.view
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,7 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-
     @ExperimentalPermissionsApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,16 +39,6 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.CarMapScreen.route
                     ) {
-                        composable(route = Screen.CarMapScreen.route) {
-                            LocationPermissionDialog(navigateToSettingsScreen = {
-                                startActivity(
-                                    Intent(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                        Uri.fromParts("package", packageName, null)
-                                    )
-                                )
-                            })
-                        }
                         composable(route = Screen.CarMapScreen.route) {
                             CarMapPreview(navController = navController)
                         }
@@ -78,11 +64,11 @@ fun CarMapPreview(
     val uiState = viewModel.uiState.value
 
     if (uiState.data != null) {
-        CarListScreen(carModelList = uiState.data, navController = navController)
+        CarMapScreen(carModelList = uiState.data, navController = navController)
     }
 
     if (uiState.error.isNotBlank()) {
-        ErrorRetryDialog(uiState.error) { _, _ ->
+        ErrorRetryDialog(uiState.error) {
             viewModel.getCarList()
         }
     }
@@ -90,6 +76,7 @@ fun CarMapPreview(
     if (uiState.isLoading) {
         ProgressBar()
     }
+
 }
 
 @Composable
@@ -103,7 +90,7 @@ fun CarDetailPreview(viewModel: CarDetailViewModel = hiltViewModel()) {
     }
 
     if (carDetailUiState.error.isNotBlank()) {
-        ErrorRetryDialog(carDetailUiState.error) { _, _ ->
+        ErrorRetryDialog(carDetailUiState.error) {
             viewModel.getCarDetail(Args.ARG_CAR_ID)
         }
     }
@@ -122,7 +109,7 @@ fun CarDetailPreview(viewModel: CarDetailViewModel = hiltViewModel()) {
     }
 
     if (carReservationUiState.error.isNotBlank()) {
-        ErrorRetryDialog(carDetailUiState.error) { _, _ ->
+        ErrorRetryDialog(carDetailUiState.error) {
             viewModel.getCarDetail(Args.ARG_CAR_ID)
         }
     }
