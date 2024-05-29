@@ -2,7 +2,6 @@ package com.imdatcandan.wundercars
 
 import androidx.annotation.CallSuper
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.ebayk.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
@@ -22,7 +21,6 @@ abstract class BaseUnitTest<T : Any> {
 
     protected lateinit var tested: T
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     @CallSuper
     open fun setUp() {
